@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>{{ site_title }}</title></head>
+<body>
+  <h1>{{ site_title }}</h1>
+  <p>Serveur : {{ ansible_hostname }}</p>
+  <p>Rôle : {{ server_role }}</p>
+  <p>Adresse IP : {{ ansible_default_ipv4.address }}</p>
+  <p>Système : {{ ansible_distribution }}, {{ ansible_distribution_version }}</p>
+</body>
+</html>
