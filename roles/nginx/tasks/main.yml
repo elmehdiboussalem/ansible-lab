@@ -1,0 +1,34 @@
+---
+- name: Installer nginx
+  ansible.builtin.apt:
+    name: "{{ nginx_package }}"
+    state: present
+    update_cache: true
+
+- name: Demarrer et activer Nginx
+  ansible.builtin.service:
+    name: "{{ nginx_package }}"
+    state: started
+    enabled: true
+
+- name: Deployer la page web
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Deployer la configuration nginx
+  ansible.builtin.template:
+    src: custom.conf.j2
+    dest: /etc/nginx/conf.d/custom.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+  notify: Recharger nginx
+
+- name: Valider la configuration nginx
+  ansible.builtin.command: nginx -t
+  changed_when: false
