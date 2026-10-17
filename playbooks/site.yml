@@ -1,7 +1,12 @@
 ---
-  - name: Configuer les serveurs web
-    hosts: webservers
+  - name: Configure common settings on all servers
+    hosts: all
     become: true
     roles:
       - common
+
+  - name: Configure Nginx on webservers
+    hosts: webservers
+    become: true
+    roles:
       - nginx
