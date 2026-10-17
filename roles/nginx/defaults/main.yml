@@ -1,3 +1,4 @@
 ---
 nginx_package: nginx
 nginx_site_title: "Automated Secure Infrastructure Lab"
+nginx_service: nginx

@@ -1,5 +1,5 @@
 ---
 - name: Recharger nginx
   ansible.builtin.service:
-    name: "{{ nginx_packages }}"
+    name: "{{ nginx_service }}"
     state: reloaded
