@@ -1,7 +1,7 @@
 ---
 - name: Installer les prérequis
   ansible.builtin.apt:
-    name: "{{requirement_package}}"
+    name: "{{ docker_prerequisites }}"
     state: present
     update_cache: true
 
