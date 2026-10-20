@@ -10,3 +10,9 @@
     become: true
     roles:
       - nginx
+
+  - name: Configurer Docker
+    hosts: dockerhosts
+    become: true
+    roles:
+      - docker
