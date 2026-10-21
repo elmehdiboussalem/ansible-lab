@@ -1,0 +1,6 @@
+# Géré par Ansible : ne pas modifier à la main
+PasswordAuthentication {{ security_ssh_password_auth }}
+PermitRootLogin {{ security_ssh_permit_root_login }}
+MaxAuthTries {{ security_ssh_max_auth_tries }}
+X11Forwarding {{ security_ssh_x11_forwarding }}
+AllowTcpForwarding {{ security_ssh_allow_tcp_forwarding }}
