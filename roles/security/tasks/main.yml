@@ -1,0 +1,8 @@
+---
+- name: Create security users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+    state: present
+    password_lock: true
+  loop: "{{ security_users }}"

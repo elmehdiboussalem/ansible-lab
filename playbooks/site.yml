@@ -16,3 +16,9 @@
     become: true
     roles:
       - docker
+
+  - name: Application des configuration de security
+    hosts: all
+    become: true
+    roles:
+      - security
