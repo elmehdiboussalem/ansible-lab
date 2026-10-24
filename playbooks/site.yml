@@ -22,3 +22,10 @@
     become: true
     roles:
       - security
+
+  - name: installer et configurer le pare-feu ufw
+    hosts: all
+    become: true
+    roles:
+      - firewall
+

@@ -1,0 +1,4 @@
+---
+trust_subnet_ssh: 192.168.100.0/24
+additional_ports: []
+
