@@ -34,3 +34,9 @@
     become: true
     roles:
       - updates
+  - name: Configurer fail2ban
+    hosts: all
+    become: true
+    roles:
+      - fail2ban
+

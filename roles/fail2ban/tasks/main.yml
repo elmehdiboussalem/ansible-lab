@@ -1,0 +1,30 @@
+---
+- name: Installation de fail2ban
+  ansible.builtin.apt:
+    name: fail2ban
+    state: present
+    update_cache: yes
+
+- name: Configuration de Fail2ban
+  ansible.builtin.copy:
+    dest: /etc/fail2ban/jail.d/lab.local
+    content: |
+      [DEFAULT]
+      ignoreip= {{ fail2ban_ignoreip | join(' ') }}
+      findtime= {{ fail2ban_findtime }}
+      bantime= {{ fail2ban_bantime }}
+
+      [sshd]
+      enabled = true
+      maxretry = {{ fail2ban_maxretry }}
+    owner: root
+    group: root
+    mode: "0644"
+  notify: redemarer fail2ban
+
+- name: Demarer fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: started
+    enabled: true
+
