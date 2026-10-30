@@ -29,3 +29,8 @@
     roles:
       - firewall
 
+  - name: configuration des parametere de mise a jours automatique
+    hosts: all
+    become: true
+    roles:
+      - updates
