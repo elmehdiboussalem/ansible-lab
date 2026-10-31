@@ -35,3 +35,10 @@
     name: "{{ docker_service }}"
     state: started
     enabled: true
+- name: ajouter les utilisateurs au groupe docker
+  ansible.builtin.user:
+    name: "{{ item }}"
+    group: "{{ item }}"
+    groups: docker
+    append: true
+  loop: "{{ docker_users }}"

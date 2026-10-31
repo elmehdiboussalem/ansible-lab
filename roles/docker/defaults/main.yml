@@ -15,3 +15,5 @@ docker_packages:
   - docker-compose-plugin
 
 docker_service: docker
+docker_users:
+  - mehdi
