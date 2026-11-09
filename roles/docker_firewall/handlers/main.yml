@@ -1,0 +1,8 @@
+
+---
+- name: Restart Docker port filter
+  ansible.builtin.systemd:
+    name: docker-port-filter.service
+    daemon_reload: true
+    state: restarted
+

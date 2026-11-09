@@ -1,0 +1,8 @@
+---
+docker_firewall_interface: ens33
+
+docker_firewall_allowed_sources:
+  - "192.168.100.1"
+  - "192.168.100.10"
+
+docker_firewall_json_file: "/home/mehdi/ansible-lab/generated/terraform_docker.json"

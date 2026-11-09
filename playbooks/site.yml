@@ -29,11 +29,18 @@
     roles:
       - firewall
 
+  - name: Filter Docker published port access
+    hosts: dockerhosts
+    become: true
+    roles:
+      - docker_firewall
+
   - name: configuration des parametere de mise a jours automatique
     hosts: all
     become: true
     roles:
       - updates
+
   - name: Configurer fail2ban
     hosts: all
     become: true

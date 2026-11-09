@@ -1,0 +1,27 @@
+
+[Unit]
+Description=Filter Docker published port access
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# DROP rule first
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -i {{ docker_firewall_interface }} -p tcp -m conntrack --ctorigdstport {{ terraform_docker.port }} --ctdir ORIGINAL -j DROP || /usr/sbin/iptables -I DOCKER-USER 1 -i {{ docker_firewall_interface }} -p tcp -m conntrack --ctorigdstport {{ terraform_docker.port }} --ctdir ORIGINAL -j DROP'
+
+{% for source in docker_firewall_allowed_sources %}
+# Allow {{ source }}
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -i {{ docker_firewall_interface }} -p tcp -s {{ source }} -m conntrack --ctorigdstport {{ terraform_docker.port }} --ctdir ORIGINAL -j RETURN || /usr/sbin/iptables -I DOCKER-USER 1 -i {{ docker_firewall_interface }} -p tcp -s {{ source }} -m conntrack --ctorigdstport {{ terraform_docker.port }} --ctdir ORIGINAL -j RETURN'
+{% endfor %}
+
+# Remove rules when stopping the service
+{% for source in docker_firewall_allowed_sources %}
+ExecStop=/bin/sh -c '/usr/sbin/iptables -D DOCKER-USER -i {{ docker_firewall_interface }} -p tcp -s {{ source }} -m conntrack --ctorigdstport {{ terraform_docker.port }} --ctdir ORIGINAL -j RETURN 2>/dev/null || true'
+{% endfor %}
+ExecStop=/bin/sh -c '/usr/sbin/iptables -D DOCKER-USER -i {{ docker_firewall_interface }} -p tcp -m conntrack --ctorigdstport {{ terraform_docker.port }} --ctdir ORIGINAL -j DROP 2>/dev/null || true'
+
+[Install]
+WantedBy=multi-user.target
+

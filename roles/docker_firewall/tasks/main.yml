@@ -1,0 +1,32 @@
+
+---
+- name: Load JSON File
+  ansible.builtin.include_vars:
+    file: "{{ docker_firewall_json_file }}"
+    name: terraform_docker
+
+- name: Validate Docker published port
+  ansible.builtin.assert:
+    that:
+      - terraform_docker.port is integer
+      - terraform_docker.port >= 1
+      - terraform_docker.port <= 65535
+    fail_msg: "The Docker published port must be an integer between 1 and 65535."
+    success_msg: "Docker published port is valid."
+
+- name: Deploy Docker port filter systemd unit
+  ansible.builtin.template:
+    src: docker-port-filter.service.j2
+    dest: /etc/systemd/system/docker-port-filter.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Docker port filter
+
+- name: Enable and start Docker port filter
+  ansible.builtin.systemd:
+    name: docker-port-filter.service
+    daemon_reload: true
+    enabled: true
+    state: started
+
