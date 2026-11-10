@@ -1,11 +1,11 @@
 ---
-- name: Installation de fail2ban
+- name: Install fail2ban
   ansible.builtin.apt:
     name: fail2ban
     state: present
     update_cache: yes
 
-- name: Configuration de Fail2ban
+- name: Configure fail2ban
   ansible.builtin.copy:
     dest: /etc/fail2ban/jail.d/lab.local
     content: |
@@ -20,9 +20,9 @@
     owner: root
     group: root
     mode: "0644"
-  notify: redemarer fail2ban
+  notify: Restart fail2ban
 
-- name: Demarer fail2ban
+- name: Enable and start fail2ban
   ansible.builtin.service:
     name: fail2ban
     state: started

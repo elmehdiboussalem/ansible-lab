@@ -1,11 +1,11 @@
 ---
-- name: Installation d'UFW
+- name: Install UFW
   ansible.builtin.apt:
     name: ufw
     state: present
     update_cache: true
 
-- name: autoriser l'access ssh depuis le resaux lan 192.168.100.0/24
+- name: Allow SSH from the lab subnet
   community.general.ufw:
     rule: allow
     direction: in
@@ -14,7 +14,7 @@
     from_ip: "{{ trust_subnet_ssh }}"
     comment: Allow SSH from lab subnet
 
-- name: allow additional ports
+- name: Allow additional TCP ports
   community.general.ufw:
     rule: allow
     direction: in
@@ -23,7 +23,7 @@
     comment: Allow additional TCP port {{ item }}
   loop: "{{ additional_ports }}"
 
-- name: deny le restes de traffic
+- name: Enable UFW and deny incoming traffic by default
   community.general.ufw:
     default: deny
     direction: incoming

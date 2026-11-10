@@ -11,19 +11,19 @@
     roles:
       - nginx
 
-  - name: Configurer Docker
+  - name: Install and configure Docker
     hosts: dockerhosts
     become: true
     roles:
       - docker
 
-  - name: Application des configuration de security
+  - name: Apply security baseline
     hosts: all
     become: true
     roles:
       - security
 
-  - name: installer et configurer le pare-feu ufw
+  - name: Configure the UFW firewall
     hosts: all
     become: true
     roles:
@@ -35,13 +35,13 @@
     roles:
       - docker_firewall
 
-  - name: configuration des parametere de mise a jours automatique
+  - name: Configure automatic updates
     hosts: all
     become: true
     roles:
       - updates
 
-  - name: Configurer fail2ban
+  - name: Install and configure fail2ban
     hosts: all
     become: true
     roles:

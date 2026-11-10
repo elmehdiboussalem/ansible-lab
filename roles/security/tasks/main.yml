@@ -7,7 +7,7 @@
     password_lock: true
   loop: "{{ security_users }}"
 
-- name: Durcir la configuration SSH
+- name: Harden the SSH configuration
   ansible.builtin.template:
     src: sshd_hardening.conf.j2
     dest: /etc/ssh/sshd_config.d/00-hardening.conf
@@ -15,4 +15,4 @@
     group: root
     mode: "0600"
     validate: /usr/sbin/sshd -t -f %s
-  notify: Recharger ssh
+  notify: Reload SSH
