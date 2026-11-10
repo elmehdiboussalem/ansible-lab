@@ -27,4 +27,3 @@
     name: fail2ban
     state: started
     enabled: true
-

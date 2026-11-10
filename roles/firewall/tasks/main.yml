@@ -28,4 +28,3 @@
     default: deny
     direction: incoming
     state: enabled
-
