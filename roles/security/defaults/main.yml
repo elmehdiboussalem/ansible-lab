@@ -12,3 +12,8 @@ security_ssh_max_auth_tries: 3
 security_ssh_x11_forwarding: "no"
 security_ssh_allow_tcp_forwarding: "no"
 security_ssh_service: "ssh"
+
+
+lxd_remove_users:
+  - mehdi
+

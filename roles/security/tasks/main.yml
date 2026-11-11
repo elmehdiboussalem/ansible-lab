@@ -16,3 +16,24 @@
     mode: "0600"
     validate: /usr/sbin/sshd -t -f %s
   notify: Reload SSH
+
+- name: Read lxd group information
+  ansible.builtin.getent:
+    database: group
+    key: lxd
+    fail_key: false
+
+- name: Remove users from lxd group
+  ansible.builtin.command:
+    argv:
+      - gpasswd
+      - -d
+      - "{{ item }}"
+      - lxd
+  loop: "{{ lxd_remove_users }}"
+  when:
+    - "'lxd' in ansible_facts.getent_group"
+    - item in (ansible_facts.getent_group['lxd'][2] | default('')).split(',')
+  changed_when: true
+  become: true
+
